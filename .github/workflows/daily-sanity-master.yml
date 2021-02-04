@@ -1,18 +1,22 @@
-name: build
+name: daily-sanity-master
 
-# Controls when the action will run. 
 on:
-  pull_request:
-
   push:
 
+  schedule:
+  - cron: "0 5 * * *"
+
 jobs:
-  deploy:
-    name: GCP CI test
+  build:
+
     runs-on: ubuntu-latest
-    timeout-minutes: 9
+    timeout-minutes: 15
 
     steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: master
+
     - name: Set env
       run: |
         VM_NAME=gha-gcp-$(date +%s)
@@ -20,9 +24,6 @@ jobs:
         echo "NETWORK_TAG=$VM_NAME-tag" >> $GITHUB_ENV
         echo "FIREWALL_RULE=$VM_NAME-access" >> $GITHUB_ENV
         echo "TESTRUNBRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
-
-    - name: Checkout
-      uses: actions/checkout@v2
 
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@master
