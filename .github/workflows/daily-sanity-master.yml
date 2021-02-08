@@ -23,7 +23,7 @@ jobs:
         echo "VM_NAME=$VM_NAME" >> $GITHUB_ENV
         echo "NETWORK_TAG=$VM_NAME-tag" >> $GITHUB_ENV
         echo "FIREWALL_RULE=$VM_NAME-access" >> $GITHUB_ENV
-        echo "TESTRUNBRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
+        echo "TESTRUNBRANCH=master" >> $GITHUB_ENV
 
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@master
